@@ -1,8 +1,8 @@
 # Phonebook ADW ORDS demo
 
-## Setup
+## Setup Guide
 
-### Login to SQL Developer Web with the admin user
+### Step 1: Login to SQL Developer Web with the admin user
 
 Submit the following:
 
@@ -26,7 +26,7 @@ END;
 
 ```
 
-### Relogin to SQL Developer Web with the new user phonebook
+### Step 2: Relogin to SQL Developer Web with the new user phonebook
 
 Submit the following:
 
@@ -172,7 +172,11 @@ ords.define_handler (
  COMMIT;
  END;
 ```
+### Step 3: Modify the ADW ORDS base path
+
 In the `controller.js` modify the line 3 `ADWBasePath` to match your ADW ORDS instance url.
+
+### Step 4: Upload to files to OCI object storage and test
 
 Copy the files to object storage and make it public. After uploading load the `index.html` with your browser and test.
 
