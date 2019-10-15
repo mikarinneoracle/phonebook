@@ -1,5 +1,7 @@
 app.controller('controller', function($location, $http, $rootScope, $scope, $routeParams)
 {
+    let ADWBasePath = 'https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook';
+    
 	if($location.path() == '/')
 	{
 		$http.get('https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/all/').success(function(response, err) {
@@ -10,7 +12,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
 
     if ($routeParams.id) {
         // Edit
-        $http.get('https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/get/' + $routeParams.id).success(function(response, err) {
+        $http.get(ADWBasePath + '/get/' + $routeParams.id).success(function(response, err) {
             $scope.person = response['items'][0];
             $rootScope.id = $routeParams.id;
             console.log($rootScope.id);
@@ -28,7 +30,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
             {
                 console.log("Deleting");
                 console.log(person);
-                $http.delete('https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/delete/' + $rootScope.id)
+                $http.delete(ADWBasePath + '/delete/' + $rootScope.id)
                 .success(function(response, err) {
                     $rootScope.id = null;
                     var location = '/';
@@ -45,7 +47,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
             } else {
                 console.log("Saving");
                 console.log(person);
-                $http.post('https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/update/' + $rootScope.id, person)
+                $http.post(ADWBasePath + '/update/' + $rootScope.id, person)
                 .success(function(response, err) {
                     $rootScope.id = null;
                     var location = '/';
@@ -63,7 +65,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
         } else {
             console.log("Adding");
             console.log(person);
-            $http.post('https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/insert/', person)
+            $http.post(ADWBasePath + '/insert/', person)
             .success(function(response, err) {
                 $rootScope.id = null;
                 var location = '/';

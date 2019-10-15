@@ -172,3 +172,7 @@ ords.define_handler (
  COMMIT;
  END;
 ```
+In the `controller.js` modify the line 3 `ADWBasePath` to match your ADW ORDS instance url.
+
+Copy the files to object storage and make it public. After uploading load the `index.html` with your browser and test.
+
