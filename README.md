@@ -178,5 +178,7 @@ In the `controller.js` modify the line 3 `ADWBasePath` to match your ADW ORDS in
 
 ### Step 4: Upload to files to OCI object storage and test
 
-Copy the files to object storage and make it public. After uploading load the `index.html` with your browser and test.
+Copy the files to object storage and make the container public. 
+
+After uploading access the `index.html` with your browser and test.
 
