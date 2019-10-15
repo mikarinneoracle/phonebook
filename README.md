@@ -7,7 +7,7 @@
 Submit the following:
 
 ```
-CREATE USER phonebook IDENTIFIED BY RestDevIsGreat55;
+CREATE USER phonebook IDENTIFIED BY <your password>;
 
 GRANT CONNECT, RESOURCE TO phonebook;
 
