@@ -4,10 +4,14 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
     
 	if($location.path() == '/')
 	{
-		$http.get(API).success(function(response, err) {
-			$scope.persons = response['items'];
-            console.log($scope.persons);
-		});
+		$http.get(API)
+            .success(function(response, err) {
+                $scope.persons = response['items'];
+                console.log($scope.persons);
+            })
+            .error(function(response, err) {
+                console.log(err);
+            })
 	}
 
     if ($routeParams.id) {
