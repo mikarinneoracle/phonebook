@@ -34,17 +34,13 @@ Submit the following:
 drop table phonebook;
 
 CREATE TABLE phonebook (
-     id        INTEGER,
-     firstname   VARCHAR2 (255),
+     id         NUMBER GENERATED ALWAYS AS IDENTITY,
+     firstname  VARCHAR2 (255),
      lastname   VARCHAR2 (255),
-     phonenumber   VARCHAR2 (50),
+     phonenumber VARCHAR2 (50),
      countrycode VARCHAR2 (10),
      CONSTRAINT phonebook_pk PRIMARY KEY (id)
  );
-
-drop SEQUENCE id_seq;
-
-create SEQUENCE id_seq increment by 1 start with 1;
 
 BEGIN
      ords.enable_schema (
@@ -80,14 +76,14 @@ ords.define_handler (
         p_source                 => 'select id, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname' 
 );
 ords.define_handler (
-        p_module_name            => 'phonebook',
-        p_pattern                => 'listing/',
-        p_method                 => 'POST', 
-        p_source_type            => 'json/collection',
-        p_items_per_page         => 0,
-        p_mimes_allowed          => '',
-        p_comments               => 'inserts a person to the phonebook by post data',
-        p_source                 => 'insert into phonebook (id, firstname, lastname, phonenumber, countrycode) VALUES (id_seq.nextval, :firstname, :lastname, :phonenumber, :countrycode)'
+        p_module_name           => 'phonebook',
+        p_pattern               => 'listing/',
+        p_method                => 'POST',
+        p_source_type           => 'plsql/block',
+        p_items_per_page        =>  0,
+        p_mimes_allowed         => '',
+        p_comments              => 'adds a contact to phonebook from the post data',
+        p_source                => 'insert into phonebook (firstname, lastname, phonenumber, countrycode) VALUES (:firstname, :lastname, :phonenumber, :countrycode)'
 );
 ords.define_template ( 
         p_module_name            => 'phonebook',
@@ -111,7 +107,7 @@ ords.define_handler (
         p_module_name            => 'phonebook',
         p_pattern                => 'listing/:id',
         p_method                 => 'PUT', 
-        p_source_type            => 'json/collection',
+        p_source_type            => 'plsql/block',
         p_items_per_page         => 0,
         p_mimes_allowed          => '',
         p_comments               => 'updates a person in the phonebook by id and post data',
@@ -121,7 +117,7 @@ ords.define_handler (
         p_module_name            => 'phonebook',
         p_pattern                => 'listing/:id',
         p_method                 => 'DELETE', 
-        p_source_type            => 'json/collection',
+        p_source_type            => 'plsql/block',
         p_items_per_page         => 0,
         p_mimes_allowed          => '',
         p_comments               => 'deletes a person in the phonebook by id',
