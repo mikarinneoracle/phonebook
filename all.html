@@ -1,5 +1,4 @@
 <h2>Contacts</h2>
-
 <p>
 <br>
 <table class="table table-hover">
@@ -17,12 +16,12 @@
       <td> {{ person.countrycode }} </td>
     </tr>
     <tr ng-if="persons.length === 0">
-        <td><strong>No persons found. <a ng-href="#/add">Add a new contact</a> </strong>.</td>
+        <td><strong>No contacts found. <a ng-href="#/add">Add a new contact</a> </strong>.</td>
     </tr>
   </tbody>
 </table>
 
-<div>
+<div ng-if="persons.length > 0">
   <a ng-href="#/add"><button class="btn btn-primary">Add new a new contact</button></a>
 </div>
 
