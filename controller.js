@@ -12,9 +12,12 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
             .error(function(response, err) {
                 console.log(err);
             })
-	}
-
-    if ($routeParams.id) {
+	} else if($location.path() == '/add')
+    {
+        // Add
+        $rootScope.id = null;
+        $scope.person = {};
+    } else if ($routeParams.id) {
         // Edit
         $http.get(API + $routeParams.id).success(function(response, err) {
             $scope.person = response['items'][0];
@@ -22,9 +25,8 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
             console.log($rootScope.id);
         });
 	} else {
-        // Add
-        $rootScope.id = null;
-        $scope.person = {};
+        var location = '/';
+        $location.path(location);
 	}
     
     $scope.save = function(person) {
