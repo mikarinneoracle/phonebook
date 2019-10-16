@@ -1,10 +1,10 @@
 app.controller('controller', function($location, $http, $rootScope, $scope, $routeParams)
 {
-    let ADWBasePath = 'https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook';
+    let API = 'https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';
     
 	if($location.path() == '/')
 	{
-		$http.get('https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/all/').success(function(response, err) {
+		$http.get(API).success(function(response, err) {
 			$scope.persons = response['items'];
             console.log($scope.persons);
 		});
@@ -12,7 +12,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
 
     if ($routeParams.id) {
         // Edit
-        $http.get(ADWBasePath + '/get/' + $routeParams.id).success(function(response, err) {
+        $http.get(API + $routeParams.id).success(function(response, err) {
             $scope.person = response['items'][0];
             $rootScope.id = $routeParams.id;
             console.log($rootScope.id);
@@ -30,7 +30,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
             {
                 console.log("Deleting");
                 console.log(person);
-                $http.delete(ADWBasePath + '/delete/' + $rootScope.id)
+                $http.delete(API + $rootScope.id)
                 .success(function(response, err) {
                     $rootScope.id = null;
                     var location = '/';
@@ -47,7 +47,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
             } else {
                 console.log("Saving");
                 console.log(person);
-                $http.post(ADWBasePath + '/update/' + $rootScope.id, person)
+                $http.put(API + $rootScope.id, person)
                 .success(function(response, err) {
                     $rootScope.id = null;
                     var location = '/';
@@ -65,7 +65,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
         } else {
             console.log("Adding");
             console.log(person);
-            $http.post(ADWBasePath + '/insert/', person)
+            $http.post(API, person)
             .success(function(response, err) {
                 $rootScope.id = null;
                 var location = '/';

@@ -36,7 +36,7 @@ drop table phonebook;
 CREATE TABLE phonebook (
      id        INTEGER,
      firstname   VARCHAR2 (255),
-  	 lastname   VARCHAR2 (255),
+     lastname   VARCHAR2 (255),
      phonenumber   VARCHAR2 (50),
      countrycode VARCHAR2 (10),
      CONSTRAINT phonebook_pk PRIMARY KEY (id)
@@ -63,7 +63,7 @@ BEGIN
 );
 ords.define_template ( 
         p_module_name            => 'phonebook',
-        p_pattern                => 'all/',
+        p_pattern                => 'listing/',
         p_priority               => 0,
         p_etag_type              => 'HASH',
         p_etag_query             => NULL, 
@@ -71,7 +71,7 @@ ords.define_template (
 );
 ords.define_handler (
         p_module_name            => 'phonebook',
-        p_pattern                => 'all/',
+        p_pattern                => 'listing/',
         p_method                 => 'GET', 
         p_source_type            => 'json/collection',
         p_items_per_page         => 25,
@@ -81,7 +81,7 @@ ords.define_handler (
 );
 ords.define_template ( 
         p_module_name            => 'phonebook',
-        p_pattern                => 'search/:name',
+        p_pattern                => 'listing/:id',
         p_priority               => 0,
         p_etag_type              => 'HASH',
         p_etag_query             => NULL, 
@@ -89,25 +89,7 @@ ords.define_template (
 );
 ords.define_handler (
         p_module_name            => 'phonebook',
-        p_pattern                => 'search/:name',
-        p_method                 => 'GET', 
-        p_source_type            => 'json/collection',
-        p_items_per_page         => 25,
-        p_mimes_allowed          => '',
-        p_comments               => 'searches persons in the phonebook by name',
-        p_source                 => 'select id, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook where firstname = :name or lastname = :name' 
-);
-ords.define_template ( 
-        p_module_name            => 'phonebook',
-        p_pattern                => 'get/:id',
-        p_priority               => 0,
-        p_etag_type              => 'HASH',
-        p_etag_query             => NULL, 
-        p_comments               => NULL 
-);
-ords.define_handler (
-        p_module_name            => 'phonebook',
-        p_pattern                => 'get/:id',
+        p_pattern                => 'listing/:id',
         p_method                 => 'GET', 
         p_source_type            => 'json/collection',
         p_items_per_page         => 1,
@@ -115,35 +97,19 @@ ords.define_handler (
         p_comments               => 'gets a person from phonebook by id',
         p_source                 => 'select firstname, lastname, phonenumber, countrycode from phonebook where id = :id'   
 );
-  ords.define_template ( 
-        p_module_name            => 'phonebook',
-        p_pattern                => 'update/:id',
-        p_priority               => 0,
-        p_etag_type              => 'HASH',
-        p_etag_query             => NULL, 
-        p_comments               => NULL 
-);
 ords.define_handler (
         p_module_name            => 'phonebook',
-        p_pattern                => 'update/:id',
-        p_method                 => 'POST', 
+        p_pattern                => 'listing/:id',
+        p_method                 => 'PUT', 
         p_source_type            => 'json/collection',
         p_items_per_page         => 0,
         p_mimes_allowed          => '',
         p_comments               => 'updates a person in the phonebook by id and post data',
         p_source                 => 'update phonebook set firstname = :firstname, lastname = :lastname, phonenumber = :phonenumber, countrycode = :countrycode where id = :id' 
 );
-  ords.define_template ( 
-        p_module_name            => 'phonebook',
-        p_pattern                => 'delete/:id',
-        p_priority               => 0,
-        p_etag_type              => 'HASH',
-        p_etag_query             => NULL, 
-        p_comments               => NULL 
-);
 ords.define_handler (
         p_module_name            => 'phonebook',
-        p_pattern                => 'delete/:id',
+        p_pattern                => 'listing/:id',
         p_method                 => 'DELETE', 
         p_source_type            => 'json/collection',
         p_items_per_page         => 0,
@@ -151,17 +117,9 @@ ords.define_handler (
         p_comments               => 'deletes a person in the phonebook by id',
         p_source                 => 'delete from phonebook where id = :id'
  );
- ords.define_template ( 
-        p_module_name            => 'phonebook',
-        p_pattern                => 'insert/',
-        p_priority               => 0,
-        p_etag_type              => 'HASH',
-        p_etag_query             => NULL, 
-        p_comments               => NULL 
-);
 ords.define_handler (
         p_module_name            => 'phonebook',
-        p_pattern                => 'insert/',
+        p_pattern                => 'listing/',
         p_method                 => 'POST', 
         p_source_type            => 'json/collection',
         p_items_per_page         => 0,
@@ -172,9 +130,14 @@ ords.define_handler (
  COMMIT;
  END;
 ```
-### Step 3: Modify the ADW ORDS base path
+### Step 3: Modify the ADW ORDS API reference
 
-In the `controller.js` modify the line 3 `ADWBasePath` to match your ADW ORDS instance url.
+In the `controller.js` modify the line 3 `API` var to match your ADW ORDS instance url.
+
+I.e.
+
+```let API = 'https://m0xcynberfeybwv-phonebook.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';```
+
 
 ### Step 4: Upload to files to OCI object storage and test
 
