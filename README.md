@@ -79,6 +79,16 @@ ords.define_handler (
         p_comments               => 'lists all persons in the phonebook',
         p_source                 => 'select id, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname' 
 );
+ords.define_handler (
+        p_module_name            => 'phonebook',
+        p_pattern                => 'listing/',
+        p_method                 => 'POST', 
+        p_source_type            => 'json/collection',
+        p_items_per_page         => 0,
+        p_mimes_allowed          => '',
+        p_comments               => 'inserts a person to the phonebook by post data',
+        p_source                 => 'insert into phonebook (id, firstname, lastname, phonenumber, countrycode) VALUES (id_seq.nextval, :firstname, :lastname, :phonenumber, :countrycode)'
+);
 ords.define_template ( 
         p_module_name            => 'phonebook',
         p_pattern                => 'listing/:id',
@@ -117,16 +127,6 @@ ords.define_handler (
         p_comments               => 'deletes a person in the phonebook by id',
         p_source                 => 'delete from phonebook where id = :id'
  );
-ords.define_handler (
-        p_module_name            => 'phonebook',
-        p_pattern                => 'listing/',
-        p_method                 => 'POST', 
-        p_source_type            => 'json/collection',
-        p_items_per_page         => 0,
-        p_mimes_allowed          => '',
-        p_comments               => 'inserts a person to the phonebook by post data',
-        p_source                 => 'insert into phonebook (id, firstname, lastname, phonenumber, countrycode) VALUES (id_seq.nextval, :firstname, :lastname, :phonenumber, :countrycode)'
-);
  COMMIT;
  END;
 ```
