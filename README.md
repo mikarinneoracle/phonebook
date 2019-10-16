@@ -77,7 +77,7 @@ ords.define_handler (
         p_items_per_page         => 25,
         p_mimes_allowed          => '',
         p_comments               => 'lists all persons in the phonebook',
-        p_source                 => 'select id, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook' 
+        p_source                 => 'select id, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname' 
 );
 ords.define_template ( 
         p_module_name            => 'phonebook',
@@ -136,7 +136,7 @@ In the `controller.js` modify the line 3 `API` var to match your ADW ORDS instan
 
 I.e.
 
-```let API = 'https://m0xcynberfeybwv-phonebook.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';```
+```let API = 'https://m0xcynberfeybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';```
 
 
 ### Step 4: Upload to files to OCI object storage and test
