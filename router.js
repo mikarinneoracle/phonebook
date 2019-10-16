@@ -9,6 +9,10 @@ var app = angular
         templateUrl: './all.html',
         controller: 'controller'
       })
+      .when('/add', {
+        templateUrl: './contact.html',
+        controller: 'controller'
+      })
       .when('/:id', {
         templateUrl: './contact.html',
         controller: 'controller'
