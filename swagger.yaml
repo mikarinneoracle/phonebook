@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  title: ORDS generated API for phonebook
+  version: 1.0.0
+host: m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com
+basePath: /ords/api/phonebook
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /listing/:
+    get:
+      description: lists all persons in the phonebook
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+    post:
+      description: adds a contact to phonebook from the post data
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PAYLOAD1'
+  '/listing/{id}':
+    get:
+      description: gets a person from phonebook by id
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: implicit
+          pattern: '^[^/]+$'
+    put:
+      description: updates a person in the phonebook by id and post data
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: implicit
+          pattern: '^[^/]+$'
+        - name: payload
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PAYLOAD1'
+    delete:
+      description: deletes a person in the phonebook by id
+      responses:
+        '200':
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: implicit
+          pattern: '^[^/]+$'
+definitions:
+  PAYLOAD1:
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      phonenumber:
+        type: string
+      countrycode:
+        type: string
