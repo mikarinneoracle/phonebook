@@ -4,14 +4,9 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
     
 	if($location.path() == '/')
 	{
-		$http.get(API)
-            .success(function(response, err) {
-                $scope.persons = response['items'];
-                console.log($scope.persons);
-            })
-            .error(function(response, err) {
-                console.log(err);
-            })
+        $rootScope.offset = 0;
+        $scope.persons = [];
+		getListing();
 	} else if($location.path() == '/add')
     {
         // Add
@@ -28,6 +23,29 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
         var location = '/';
         $location.path(location);
 	}
+    
+    function getListing(callback) {
+        $http.get(API + '?offset=' + $rootScope.offset)
+            .success(function(response, err) {
+                var items = response['items'];
+                console.log(items);
+                for(var i = 0; i < items.length; i++)
+                {
+                    $scope.persons.push(items[i]);
+                }
+                if(response['hasMore'])
+                {
+                    $rootScope.offset = $rootScope.offset + response['count'];
+                    console.log($rootScope.offset);
+                    return getListing(callback);
+                } else {
+                    return callback;
+                }
+            })
+           .error(function(response, err) {
+                console.log(err);
+            })
+    }
     
     $scope.save = function(person) {
         if($rootScope.id)
