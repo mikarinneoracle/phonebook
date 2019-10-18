@@ -53,7 +53,7 @@ BEGIN
  ords.define_module (    
         p_module_name            => 'phonebook',
         p_base_path              => '/phonebook/',
-        p_items_per_page         => 25,
+        p_items_per_page         => 5,
         p_status                 => 'PUBLISHED',
         p_comments               => NULL 
 );
@@ -70,9 +70,9 @@ ords.define_handler (
         p_pattern                => 'listing/',
         p_method                 => 'GET', 
         p_source_type            => 'json/collection',
-        p_items_per_page         => 25,
+        p_items_per_page         => 5,
         p_mimes_allowed          => '',
-        p_comments               => 'lists all persons in the phonebook',
+        p_comments               => 'lists contacts in the phonebook in sets of 5. Use recursively.',
         p_source                 => 'select id, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname' 
 );
 ords.define_handler (
@@ -100,7 +100,7 @@ ords.define_handler (
         p_source_type            => 'json/collection',
         p_items_per_page         => 1,
         p_mimes_allowed          => '',
-        p_comments               => 'gets a person from phonebook by id',
+        p_comments               => 'gets a contact from phonebook by id',
         p_source                 => 'select firstname, lastname, phonenumber, countrycode from phonebook where id = :id'   
 );
 ords.define_handler (
@@ -110,7 +110,7 @@ ords.define_handler (
         p_source_type            => 'plsql/block',
         p_items_per_page         => 0,
         p_mimes_allowed          => '',
-        p_comments               => 'updates a person in the phonebook by id and post data',
+        p_comments               => 'updates a contact in the phonebook by id and post data',
         p_source                 => 'update phonebook set firstname = :firstname, lastname = :lastname, phonenumber = :phonenumber, countrycode = :countrycode where id = :id' 
 );
 ords.define_handler (
@@ -120,7 +120,7 @@ ords.define_handler (
         p_source_type            => 'plsql/block',
         p_items_per_page         => 0,
         p_mimes_allowed          => '',
-        p_comments               => 'deletes a person in the phonebook by id',
+        p_comments               => 'deletes a contact in the phonebook by id',
         p_source                 => 'delete from phonebook where id = :id'
  );
  COMMIT;
