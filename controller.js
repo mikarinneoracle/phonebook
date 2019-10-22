@@ -1,6 +1,7 @@
-app.controller('controller', function($location, $http, $rootScope, $scope, $routeParams)
-{
-    let API = 'https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';
+app.controller('controller', function ($location, $http, $rootScope, $scope, $routeParams)
+{   
+    const API = 'https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';
+    
     
 	if($location.path() == '/')
 	{
@@ -25,6 +26,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
 	}
     
     function getListing(callback) {
+        $rootScope.message = "Retrieving phonebook ..";
         $http.get(API + '?offset=' + $rootScope.offset)
             .success(function(response, err) {
                 var items = response['items'];
@@ -39,6 +41,7 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
                     console.log($rootScope.offset);
                     return getListing(callback);
                 } else {
+                    $rootScope.message = null;
                     return callback;
                 }
             })
@@ -54,20 +57,23 @@ app.controller('controller', function($location, $http, $rootScope, $scope, $rou
             {
                 console.log("Deleting");
                 console.log(person);
-                $http.delete(API + $rootScope.id)
-                .success(function(response, err) {
-                    $rootScope.id = null;
-                    var location = '/';
-                    $location.path(location);
-                    return;
-                })
-                .error(function(response, err) {
-                    $rootScope.id = null;
-                    //alert(response.error);
-                    var location = '/';
-                    $location.path(location);
-                    return;
-                })   
+                if(confirm("Delete " + person.firstname + " " + person.lastname + " ?"))
+                {
+                    $http.delete(API + $rootScope.id)
+                    .success(function(response, err) {
+                        $rootScope.id = null;
+                        var location = '/';
+                        $location.path(location);
+                        return;
+                    })
+                    .error(function(response, err) {
+                        $rootScope.id = null;
+                        //alert(response.error);
+                        var location = '/';
+                        $location.path(location);
+                        return;
+                    })
+                }
             } else {
                 console.log("Saving");
                 console.log(person);

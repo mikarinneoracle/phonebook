@@ -2,6 +2,11 @@
 <p>
 <br>
 <div>
+<div ng-if="message">
+    {{ message }}
+    <br>
+    <br>
+</div>
 <form class="form-horizontal" role="form">
   <div class="form-group">
     <label class="col-md-2 control-label" for="searchInput">Search</label>
@@ -24,7 +29,7 @@
       <td> {{ person.phonenumber }} </td>
       <td> {{ person.countrycode }} </td>
     </tr>
-    <tr ng-if="persons.length === 0">
+    <tr ng-if="persons.length === 0 && !message">
         <td><strong>No contacts found. <a ng-href="#/add">Add a new contact</a> </strong>.</td>
     </tr>
   </tbody>
