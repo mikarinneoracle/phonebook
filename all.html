@@ -1,12 +1,6 @@
 <h2>Contacts</h2>
 <p>
 <br>
-<div>
-<div ng-if="message">
-    {{ message }}
-    <br>
-    <br>
-</div>
 <form class="form-horizontal" role="form">
   <div class="form-group">
     <label class="col-md-2 control-label" for="searchInput">Search</label>
@@ -15,6 +9,13 @@
     </div>
   </div>
 </form>
+
+<div ng-if="message">
+    {{ message }}
+    <br>
+    <br>
+</div>
+
 <table class="table table-hover">
   <thead>
     <tr>
