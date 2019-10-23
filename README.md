@@ -4,7 +4,7 @@
 
 ### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
 
-Submit the following:
+Then submit the following:
 
 ```
 CREATE USER phonebook IDENTIFIED BY <your password>;
@@ -28,13 +28,13 @@ END;
 
 ### Step 2: Relogin to SQL Developer Web with the new user phonebook
 
-## Before logging in replace the "<b><i>admin</i></b>" in the url with "<b><i>api</i></b>" eg.
+#### Before logging in replace the "<b><i>admin</i></b>" in the url with "<b><i>api</i></b>" eg.
 
-`https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/<b>api</b>/_sdw/?nav=worksheet`
+`https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/_sdw/?nav=worksheet`
 
+This refers to the `p_url_mapping_pattern   => 'api'` in the <ords definition in Step 1.
 
-
-Submit the following:
+After logging in submit the following:
 
 ```
 drop table phonebook;
