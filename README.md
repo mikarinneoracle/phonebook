@@ -2,7 +2,7 @@
 
 ## Setup Guide
 
-### Step 1: Login to SQL Developer Web with the admin user
+### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
 
 Submit the following:
 
@@ -27,6 +27,12 @@ END;
 ```
 
 ### Step 2: Relogin to SQL Developer Web with the new user phonebook
+
+## Before logging in replace the "<b><i>admin</i></b>" in the url with "<b><i>api</i></b>" eg.
+
+`https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/<b>api</b>/_sdw/?nav=worksheet`
+
+
 
 Submit the following:
 
