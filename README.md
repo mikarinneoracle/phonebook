@@ -32,7 +32,7 @@ END;
 
 `https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/_sdw/?nav=worksheet`
 
-This refers to the `p_url_mapping_pattern   => 'api'` in the <ords definition in Step 1.
+This refers to the `p_url_mapping_pattern   => 'api'` in the ords definition in Step 1.
 
 After logging in submit the following:
 
