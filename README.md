@@ -44,8 +44,7 @@ CREATE TABLE phonebook (
      firstname  VARCHAR2 (255),
      lastname   VARCHAR2 (255),
      phonenumber VARCHAR2 (50),
-     countrycode VARCHAR2 (10),
-     CONSTRAINT phonebook_pk PRIMARY KEY (id)
+     countrycode VARCHAR2 (10)
  );
 
 BEGIN
