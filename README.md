@@ -137,7 +137,7 @@ In the `controller.js` modify the line 3 `API` var to match your ADW ORDS instan
 
 The easiest way is to copy it from the SQL Developer Web url and modify it slightly.
 
-I.e.
+E.g
 
 ```let API = 'https://m0xcynberfeybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';```
 
