@@ -78,7 +78,7 @@ ords.define_handler (
         p_items_per_page         => 5,
         p_mimes_allowed          => '',
         p_comments               => 'lists contacts in the phonebook in sets of 5. Use recursively.',
-        p_source                 => 'select id, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname' 
+        p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname' 
 );
 ords.define_handler (
         p_module_name           => 'phonebook',

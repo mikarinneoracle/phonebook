@@ -1,0 +1,175 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="stylesheet" type="text/css" href="navbar.css">
+    </head>
+
+    <body>
+
+		<!-- Fixed navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html#/">Phonebook</a>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="index.html#/">Home</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        
+        <div class="container" id="phonebook">
+            
+           <div v-if="data.state == data.CONTACTS">
+                
+                <h2>Contacts</h2>
+                <p>
+                <br>
+
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="searchInput">Search</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" id="searchInput" v-model="data.search" placeholder="search by name"/>
+                    </div>
+                  </div>
+                </form>
+                <br>
+
+                <table class="table table-hover" >
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Country</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-if="data.msg"><td colspan="3"><i>{{ data.msg }}</i></td></tr>
+                    <tr  v-for="person in filteredPersons">
+                      <td> <a v-on:click="editContact($event, person.id)"> {{ person.fullname }} </a> </td>
+                      <td> {{ person.phonenumber }} </td>
+                      <td> {{ person.countrycode }} </td>
+                    </tr>
+                    <tr v-if="!data.persons.length && !data.msg">
+                        <td><strong>No contacts found. <a v-on:click="newContact">Add a new contact</a> </strong>.</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div v-if="!data.msg && data.persons.length > 0">
+                  <button class="btn btn-primary" v-on:click="newContact">Add new a new contact</button>
+                </div>
+                
+          </div>
+        
+          <div v-if="data.state == data.ADD_CONTACT">
+              
+                <h2>Add Contact</h2>
+                <p>
+
+                {{ data.msg }}
+                <br>
+                    
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="firstname">First name</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="firstname" v-model="data.person.firstname" placeholder="first name"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="lastname">Last name</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="lastname" v-model="data.person.lastname" placeholder="last name"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="phonenumber">Phone number</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="phonenumber" v-model="data.person.phonenumber" placeholder="phone number"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="countrycode">Country code</label>
+                    <div class="col-md-3">
+                        <input class="form-control" type="text" id="countrycode" v-model="data.person.countrycode" placeholder="country"/>
+                    </div>
+                  </div>
+                  <div class="col-md-8 form-group pull-left">
+                    <div class="col-md-8">
+                      <button type="button" class="btn btn-primary" v-on:click="addContact">Add</button>
+                      <button type="button" class="btn btn-default"v-on:click="data.state=data.CONTACTS">Close</button>
+                    </div>
+                  </div>
+                </form>
+
+          </div>
+            
+          <div v-if="data.state == data.EDIT_CONTACT">
+              
+                <h2>Edit Contact</h2>
+                <p>
+
+                {{ data.msg }}
+                <br>
+                    
+                <form class="form-horizontal" role="form">
+                  <input type="hidden" id="id"  v-model="data.person.id" />
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="firstname">First name</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="firstname" v-model="data.person.firstname" placeholder="first name"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="lastname">Last name</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="lastname" v-model="data.person.lastname" placeholder="last name"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="phonenumber">Phone number</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="phonenumber" v-model="data.person.phonenumber" placeholder="phone number"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="countrycode">Country code</label>
+                    <div class="col-md-3">
+                        <input class="form-control" type="text" id="countrycode" v-model="data.person.countrycode" placeholder="country"/>
+                    </div>
+                  </div>
+                  <div class="col-md-8 form-group pull-left">
+                    <div class="col-md-8">
+                      <button type="button" class="btn btn-primary" v-on:click="saveContact">Save</button>
+                        <button type="button" class="btn btn-default" v-on:click="deleteContact">Delete</button>
+                      <button type="button" class="btn btn-default"v-on:click="data.state=data.CONTACTS">Close</button>
+                    </div>
+                  </div>
+                </form>
+
+          </div>
+                
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="vue.js"></script>
+    
+    </body>
+</html>
