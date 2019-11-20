@@ -75,7 +75,6 @@ function addContact() {
                 data.state = data.CONTACTS;
                 data.persons = [];
                 getListing();
-                console.log(response);
             }
         )
      .catch(error => {
@@ -111,7 +110,6 @@ function deleteContact() {
                 data.state = data.CONTACTS;
                 data.persons = [];
                 getListing();
-                console.log(response);
             }
         )
      .catch(error => {
@@ -125,15 +123,10 @@ function getListing(callback) {
     axios
       .get(API + '?offset=' + offset)
       .then(response => 
-            {
-                console.log(response.data.items);
-                console.log(response.data.hasMore);
-                console.log(response.data.count);
-        
+            {        
                 var items = response.data.items;
                 for(var i = 0; i < items.length; i++)
                 {
-                   console.log(items[i].fullname);
                    data.persons.push(items[i]);
                 }
                 if(response.data.hasMore)
