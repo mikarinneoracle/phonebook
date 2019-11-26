@@ -2,6 +2,12 @@
 
 ## Setup Guide
 
+### NEW!
+
+Clone/download the `phonebook-basic-stack.zip` and run it with the OCI Resource Manager Stack (Terraform) to create the phonebook app automatically.
+It runs on OCI Free Tier, too! `https://www.oracle.com/cloud/free/`
+
+
 ### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
 
 Then submit the following:
