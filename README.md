@@ -16,7 +16,7 @@ E.g.
 Outputs:
 autonomous_database_password = j9}l4w%4E2*IYNS<
 autonomous_database_phonebook_ords_password = a8OAHjx28wEVmU1fz
-comments = To access the Phonebook app please visit: <b>https://objectstorage.eu-frankfurt-1.oraclecloud.com/n/fr2nn14e4hr7/b/phonebook-public-4126/o/index.html</b> - Give it a minute or two for the ORDS to start before trying. 
+comments = To access the Phonebook app please visit: https://objectstorage.eu-frankfurt-1.oraclecloud.com/n/fr2nn14e4hr7/b/phonebook-public-4126/o/index.html - Give it a minute or two for the ORDS to start before trying. 
 ```
 
 ### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
