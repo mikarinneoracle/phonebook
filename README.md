@@ -7,6 +7,17 @@
 Clone/download the `phonebook-stack.zip` and run it with the OCI Resource Manager Stack (Terraform) to create the phonebook app automatically.
 It runs on OCI Free Tier, too! `https://www.oracle.com/cloud/free/`
 
+#### Instructions:
+
+Create a new `stack` from `phonebook-stack.zip` and then choose `Apply` from the dropdown menu.
+Wait a while for the job beking completed. At the end of the output the app url should become visible that points to the `index.html` in the object storage. That is your application, just wait for a minute or two for ORDS being deployed completely.
+E.g.
+```
+Outputs:
+autonomous_database_password = j9}l4w%4E2*IYNS<
+autonomous_database_phonebook_ords_password = a8OAHjx28wEVmU1fz
+comments = To access the Phonebook app please visit: <b>https://objectstorage.eu-frankfurt-1.oraclecloud.com/n/fr2nn14e4hr7/b/phonebook-public-4126/o/index.html</b> - Give it a minute or two for the ORDS to start before trying. 
+```
 
 ### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
 
