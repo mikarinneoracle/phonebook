@@ -151,17 +151,18 @@ ords.define_handler (
 ### Step 3: Modify the ADW ORDS API reference
 
 In the `controller.js` modify the line 3 `API` var to match your ADW ORDS instance url.
+(Or, in case of using `vue.html` and `Vue.js` replace the line 1 in `vue.js`)
 
 The easiest way is to copy it from the SQL Developer Web url and modify it slightly.
 
 E.g
 
-```let API = 'https://m0xcynberfeybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';```
+```const API = 'https://m0xcynberfeybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';```
 
 
 ### Step 4: Upload to files to OCI object storage and test
 
 Copy the files to object storage and make the container public. 
 
-After uploading access the `index.html` with your browser and test.
+After uploading access the `index.html` (AngularJS 1) or `vue.html` (Vue.js) with your browser and test.
 
