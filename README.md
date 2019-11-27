@@ -2,9 +2,9 @@
 
 ## Setup Guide
 
-### NEW!
+### NEW! OCI Resource Manager Stack
 
-Clone/download the `phonebook-basic-stack.zip` and run it with the OCI Resource Manager Stack (Terraform) to create the phonebook app automatically.
+Clone/download the `phonebook-stack.zip` and run it with the OCI Resource Manager Stack (Terraform) to create the phonebook app automatically.
 It runs on OCI Free Tier, too! `https://www.oracle.com/cloud/free/`
 
 
