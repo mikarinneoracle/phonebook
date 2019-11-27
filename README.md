@@ -10,7 +10,7 @@ It runs on OCI Free Tier, too! `https://www.oracle.com/cloud/free/`
 #### Instructions:
 
 Create a new `stack` from `phonebook-stack.zip` and then choose `Apply` from the dropdown menu.
-Wait a while for the job beking completed. At the end of the output the app url should become visible that points to the `index.html` in the object storage. That is your application, just wait for a minute or two for ORDS being deployed completely.
+Wait a while for the job to complete. At the end of the output the Phonebook app url should become visible that points to the `index.html` in the object storage. That is your application, just wait for a minute or two for ORDS being deployed completely.
 E.g.
 ```
 Outputs:
