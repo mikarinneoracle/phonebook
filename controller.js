@@ -1,6 +1,6 @@
 app.controller('controller', function ($location, $http, $rootScope, $scope, $routeParams)
 {   
-    const API = 'https://m0xcynbe1vuybwv-biketracker.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';
+    const API = 'https://udedvammm0sarjj-atp.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';
     
     
 	if($location.path() == '/')

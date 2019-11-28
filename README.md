@@ -150,8 +150,7 @@ ords.define_handler (
 ```
 ### Step 3: Modify the ADW ORDS API reference
 
-In the `controller.js` modify the line 3 `API` var to match your ADW ORDS instance url.
-(Or, in case of using `vue.html` and `Vue.js` replace the line 1 in `vue.js`)
+In the `Vue.js` modify the line 1 `API` var to match your ADW ORDS instance url.
 
 The easiest way is to copy it from the SQL Developer Web url and modify it slightly.
 
@@ -164,5 +163,5 @@ E.g
 
 Copy the files to object storage and make the container public. 
 
-After uploading access the `index.html` (AngularJS 1) or `vue.html` (Vue.js) with your browser and test.
+After uploading access the `index.html` with your browser and test.
 
