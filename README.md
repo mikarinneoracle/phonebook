@@ -152,7 +152,7 @@ ords.define_handler (
 
 In the `Vue.js` modify the line 1 `API` var to match your ADW ORDS instance url.
 
-The easiest way is to copy it from the SQL Developer Web url and modify it slightly.
+The easiest way is to copy it from the SQL Developer Web url (see the Step 2) and then modify it slightly.
 
 E.g
 
