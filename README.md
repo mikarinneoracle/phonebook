@@ -18,6 +18,11 @@ autonomous_database_password = j9}l4w%4E2*IYNS<
 autonomous_database_phonebook_ords_password = a8OAHjx28wEVmU1fz
 comments = To access the Phonebook app please visit: https://objectstorage.eu-frankfurt-1.oraclecloud.com/n/fr2nn14e4hr7/b/phonebook-public-4126/o/index.html - Give it a minute or two for the ORDS to start before trying. 
 ```
+Note: When creating the stack enter the following configuration options:
+- ATP database name (defaults to "phonebook")
+- configuration VM ssh public key to access the VM for logs etc. (optional)
+- configuration VM shape, either Micro (always free) or standard (defaults to Micro)
+
 
 ### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
 
@@ -54,8 +59,6 @@ This refers to the `p_url_mapping_pattern   => 'api'` in the ords definition in 
 After logging in submit the following:
 
 ```
-drop table phonebook;
-
 CREATE TABLE phonebook (
      id         NUMBER GENERATED ALWAYS AS IDENTITY,
      firstname  VARCHAR2 (255),
@@ -64,15 +67,34 @@ CREATE TABLE phonebook (
      countrycode VARCHAR2 (10)
  );
 
+CREATE OR REPLACE PROCEDURE ADD_CONTACT (
+   firstname    IN  VARCHAR2,
+   lastname     IN  VARCHAR2,
+   phonenumber  IN  VARCHAR2,
+   countrycode  IN  VARCHAR2,
+   id           OUT NUMBER
+)
+AS
 BEGIN
-     ords.enable_schema (
+   INSERT INTO PHONEBOOK (FIRSTNAME, LASTNAME, PHONENUMBER, COUNTRYCODE)
+   VALUES (firstname, lastname, phonenumber, countrycode)
+   RETURN ID INTO id;
+ 
+EXCEPTION
+   WHEN OTHERS
+   THEN HTP.print(SQLERRM);
+END;
+/
+
+BEGIN
+ords.enable_schema (
          p_enabled               => TRUE,
          p_schema                => 'phonebook',
          p_url_mapping_type      => 'BASE_PATH',
          p_url_mapping_pattern   => 'api',
          p_auto_rest_auth        => TRUE
-     );
- ords.define_module (    
+);
+ords.define_module (    
         p_module_name            => 'phonebook',
         p_base_path              => '/phonebook/',
         p_items_per_page         => 5,
@@ -95,7 +117,7 @@ ords.define_handler (
         p_items_per_page         => 5,
         p_mimes_allowed          => '',
         p_comments               => 'lists contacts in the phonebook in sets of 5. Use recursively.',
-        p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname' 
+        p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname'
 );
 ords.define_handler (
         p_module_name           => 'phonebook',
@@ -105,8 +127,29 @@ ords.define_handler (
         p_items_per_page        =>  0,
         p_mimes_allowed         => '',
         p_comments              => 'adds a contact to phonebook from the post data',
-        p_source                => 'insert into phonebook (firstname, lastname, phonenumber, countrycode) VALUES (:firstname, :lastname, :phonenumber, :countrycode)'
+        p_source                => 
+'
+    declare
+        -- id NUMBER;
+    BEGIN
+        ADD_CONTACT(firstname    => :firstname,
+                lastname     => :lastname,
+                phonenumber  => :phonenumber,
+                countrycode  => :countrycode,
+                id           => :id);
+    commit;
+    END;
+'
 );
+ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'phonebook',
+      p_pattern            => 'listing/',
+      p_method             => 'POST',
+      p_name               => 'id',
+      p_bind_variable_name => 'id',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT');    
 ords.define_template ( 
         p_module_name            => 'phonebook',
         p_pattern                => 'listing/:id',
@@ -147,6 +190,7 @@ ords.define_handler (
  );
  COMMIT;
  END;
+ /
 ```
 ### Step 3: Modify the ADW ORDS API reference
 
