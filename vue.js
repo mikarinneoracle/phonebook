@@ -74,6 +74,7 @@ function addContact() {
                 data.msg = "";
                 data.state = data.CONTACTS;
                 data.persons = [];
+                offset = 0;
                 getListing();
             }
         )
@@ -91,6 +92,7 @@ function saveContact() {
                 data.msg = "";
                 data.state = data.CONTACTS;
                 data.persons = [];
+                offset = 0;
                 getListing();
                 console.log(response);
             }
@@ -109,6 +111,7 @@ function deleteContact() {
                 data.msg = "";
                 data.state = data.CONTACTS;
                 data.persons = [];
+                offset = 0;
                 getListing();
             }
         )
