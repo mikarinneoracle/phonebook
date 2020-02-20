@@ -119,6 +119,24 @@ ords.define_handler (
         p_comments               => 'lists contacts in the phonebook in sets of 5. Use recursively.',
         p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook order by fullname'
 );
+ords.define_template ( 
+        p_module_name            => 'phonebook',
+        p_pattern                => 'listing/fullname/:fullname',
+        p_priority               => 0,
+        p_etag_type              => 'HASH',
+        p_etag_query             => NULL, 
+        p_comments               => NULL 
+);
+ords.define_handler (
+        p_module_name            => 'phonebook',
+        p_pattern                => 'listing/fullname/:fullname',
+        p_method                 => 'GET', 
+        p_source_type            => 'json/collection',
+        p_items_per_page         => 5,
+        p_mimes_allowed          => '',
+        p_comments               => 'searches for contacts in the phonebook by given name and lists found in sets of 5. Use recursively.',
+        p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook where firstname || '' '' || lastname like :fullname || ''%'' order by fullname'
+);
 ords.define_handler (
         p_module_name           => 'phonebook',
         p_pattern               => 'listing/',
