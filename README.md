@@ -135,7 +135,7 @@ ords.define_handler (
         p_items_per_page         => 5,
         p_mimes_allowed          => '',
         p_comments               => 'searches for contacts in the phonebook by given name and lists found in sets of 5. Use recursively.',
-        p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook where firstname || '' '' || lastname like :fullname || ''%'' order by fullname'
+        p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook where firstname || '' '' || lastname like :fullname order by fullname'
 );
 ords.define_handler (
         p_module_name           => 'phonebook',
