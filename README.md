@@ -1,13 +1,15 @@
-# Phonebook ADW ORDS demo
+# Phonebook ATP ORDS demo
 
 ## Setup Guide
 
-### NEW! OCI Resource Manager Stack
+### NEW! Oracle Digital Assistant Chatbot for Phonebook
+
+Instructions to set up a Chatbot for the Phonebook is now available at <a href=https://github.com/mikarinneoracle/Phonebookassistant/blob/master/README.md">Phonebookassistant</a>
+
+## Instructions for creating the Phonebook ORDS example using the OCI Resource Manager Stack
 
 Clone/download the `phonebook-stack.zip` and run it with the OCI Resource Manager Stack (Terraform) to create the phonebook app automatically.
 It runs on OCI Free Tier, too! `https://www.oracle.com/cloud/free/`
-
-#### Instructions:
 
 Create a new `stack` from `phonebook-stack.zip` and then choose `Apply` from the dropdown menu.
 Wait a while for the job to complete. At the end of the output the Phonebook app url should become visible that points to the `index.html` in the object storage. That is your application, just wait for a minute or two for ORDS being deployed completely.
@@ -23,6 +25,7 @@ Note: When creating the stack enter the following configuration options:
 - configuration VM ssh public key to access the VM for logs etc. (optional)
 - configuration VM shape, either Micro (always free) or standard (defaults to Micro)
 
+## Instructions for creating the Phonebook ORDS example manually
 
 ### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
 
