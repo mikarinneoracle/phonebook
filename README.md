@@ -4,7 +4,7 @@
 
 ### NEW! Oracle Digital Assistant Chatbot for Phonebook
 
-Instructions to set up a Chatbot for the Phonebook is now available at <a href=https://github.com/mikarinneoracle/Phonebookassistant/blob/master/README.md">Phonebookassistant</a>
+Instructions to set up a Chatbot for the Phonebook is now available at <a href="https://github.com/mikarinneoracle/Phonebookassistant/blob/master/README.md">Phonebookassistant</a>
 
 ## Instructions for creating the Phonebook ORDS example using the OCI Resource Manager Stack
 
