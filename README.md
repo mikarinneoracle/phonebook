@@ -1,5 +1,7 @@
 # Phonebook ATP ORDS demo
 
+<img src="./blob/master/screenshot_phonebook.png" width=1600>
+
 ## Setup Guide
 
 ### NEW! Oracle Digital Assistant Chatbot for Phonebook
