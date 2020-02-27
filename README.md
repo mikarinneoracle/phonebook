@@ -1,6 +1,6 @@
 # Phonebook ATP ORDS demo
 
-<img src="https://github.com/mikarinneoracle/phonebook/blob/master/screenshot_phonebook.png" width=1600>
+<img src="https://github.com/mikarinneoracle/phonebook/blob/master/screenshot_phonebook.png" width=1200>
 
 ## Setup Guide
 
