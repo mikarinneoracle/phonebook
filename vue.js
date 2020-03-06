@@ -134,7 +134,7 @@ function getListing(callback) {
                 }
                 if(response.data.hasMore)
                 {
-                    offset =+ response.data.count;
+                    offset = offset + response.data.count;
                     return getListing(callback);
                 } else {
                     data.msg = "";
