@@ -10,7 +10,7 @@ Instructions how to set up a Chatbot for the Phonebook is now available at <a hr
 
 ## Instructions for creating the Phonebook ORDS example using the OCI Resource Manager Stack
 
-Clone/download the `phonebook-stack.zip` and run it with the OCI Resource Manager Stack (Terraform) to create the phonebook app automatically.
+Clone/download the `phonebook-stack-1-1.zip` and run it with the OCI Resource Manager Stack (Terraform) to create the phonebook app automatically.
 It runs on OCI Free Tier, too! `https://www.oracle.com/cloud/free/`
 
 Create a new `stack` from `phonebook-stack.zip` and then choose `Apply` from the dropdown menu.
