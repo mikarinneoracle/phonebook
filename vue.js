@@ -1,11 +1,12 @@
-const API = 'https://udedvammm0sarjj-atp.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';
+const API = 'https://yut6o4hshhk6mw1-phonebook19106.adb.eu-frankfurt-1.oraclecloudapps.com/ords/api/phonebook/listing/';
 
 var offset = 0;
 var data = { persons : [],
              msg : '',
              search: '',
              person: {},
-             state: 0, CONTACTS : 1, ADD_CONTACT : 2, EDIT_CONTACT : 3
+             login: {},
+             state: 0, CONTACTS : 1, ADD_CONTACT : 2, EDIT_CONTACT : 3, LOGIN : 4
            };
 
 var phonebook = new Vue({
@@ -16,6 +17,10 @@ var phonebook = new Vue({
     data.state=data.CONTACTS;
     data.person = {};
     data.persons = [];
+    data.login = {};
+    data.login.username = '';
+    data.login.password = '';
+    data.login.isAdmin = 0;
     getListing();
   },
   computed: {
@@ -26,6 +31,12 @@ var phonebook = new Vue({
     }
   },
   methods:{
+    login: function (e) {
+      data.msg = "Logging in ..";
+      console.log(data.login);
+      login();
+      e.preventDefault();
+    },
     addContact: function (e) {
       data.msg = "Saving a new contact ..";
       addContact();
@@ -66,9 +77,32 @@ var phonebook = new Vue({
   }
 })
 
+function login() {
+    axios
+      .post(API + 'login/', data.login)
+      .then(response => 
+            {
+                if(response.data.count == 1)
+                {
+                    data.login.isAdmin = response.data.items[0].is_admin;
+                }
+                data.login.isAdmin = 1; //TESTING API's
+                data.msg = "";
+                data.state = data.CONTACTS;
+                data.persons = [];
+                offset = 0;
+                getListing();
+            }
+        )
+     .catch(error => {
+            alert(error);
+            console.log(error)
+        })
+}
+
 function addContact() {
     axios
-      .post(API, data.person)
+      .post(API + data.login.username + '/' + data.login.password, data.person)
       .then(response => 
             {
                 data.msg = "";
@@ -86,7 +120,7 @@ function addContact() {
 
 function saveContact() {
     axios
-      .put(API + data.person.id, data.person)
+      .put(API + data.person.id + '/' + data.login.username + '/' + data.login.password, data.person)
       .then(response => 
             {
                 data.msg = "";
@@ -105,7 +139,7 @@ function saveContact() {
 
 function deleteContact() {
     axios
-      .delete(API + data.person.id)
+      .delete(API + data.person.id + '/' + data.login.username + '/' + data.login.password)
       .then(response => 
             {
                 data.msg = "";

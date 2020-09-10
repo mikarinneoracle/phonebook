@@ -24,7 +24,10 @@
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  <li class="active"><a onclick="window.location.reload(true);">Refresh</a></li>
+                  <li><a onclick="window.location.reload(true);">Refresh</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                  <li><a onclick="javascript: data.state = data.LOGIN;">Admin</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
@@ -63,13 +66,13 @@
                       <td> {{ person.phonenumber }} </td>
                       <td> {{ person.countrycode }} </td>
                     </tr>
-                    <tr v-if="!data.persons.length && !data.msg">
+                    <tr v-if="!data.persons.length && !data.msg && data.login.isAdmin == 1">
                         <td><strong>No contacts found. <a v-on:click="newContact">Add a new contact</a> </strong>.</td>
                     </tr>
                   </tbody>
                 </table>
 
-                <div v-if="!data.msg && data.persons.length > 0">
+                <div v-if="!data.msg && data.persons.length > 0 && data.login.isAdmin == 1">
                   <button class="btn btn-primary" v-on:click="newContact">Add new a new contact</button>
                 </div>
                 
@@ -110,8 +113,8 @@
                   </div>
                   <div class="col-md-8 form-group pull-left">
                     <div class="col-md-8">
-                      <button type="button" class="btn btn-primary" v-on:click="addContact">Add</button>
-                      <button type="button" class="btn btn-default"v-on:click="data.state=data.CONTACTS">Close</button>
+                      <span v-if="data.login.isAdmin == 1"><button type="button" class="btn btn-primary" v-on:click="addContact">Add</button></span>
+                      <button type="button" class="btn btn-default" v-on:click="data.state=data.CONTACTS">Close</button>
                     </div>
                   </div>
                 </form>
@@ -154,14 +157,47 @@
                   </div>
                   <div class="col-md-8 form-group pull-left">
                     <div class="col-md-8">
-                      <button type="button" class="btn btn-primary" v-on:click="saveContact">Save</button>
-                        <button type="button" class="btn btn-default" v-on:click="deleteContact">Delete</button>
-                      <button type="button" class="btn btn-default"v-on:click="data.state=data.CONTACTS">Close</button>
+                        <span v-if="data.login.isAdmin == 1"><button type="button" class="btn btn-primary" v-on:click="saveContact">Save</button></span>
+                        <span v-if="data.login.isAdmin == 1"><button type="button" class="btn btn-default" v-on:click="deleteContact">Delete</button></span>
+                      <button type="button" class="btn btn-default" v-on:click="data.state=data.CONTACTS">Close</button>
                     </div>
                   </div>
                 </form>
 
           </div>
+            
+          <div v-if="data.state == data.LOGIN">
+              
+                <h2>Admin Login</h2>
+                <p>
+
+                {{ data.msg }}
+                <br>
+                    
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="username">Username</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="username" v-model="data.login.username" placeholder="username"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="password">Password</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="password" id="password" v-model="data.login.password" 
+                        placeholder="password"/>
+                    </div>
+                  </div>
+                  <div class="col-md-8 form-group pull-left">
+                    <div class="col-md-8">
+                      <button type="button" class="btn btn-primary" v-on:click="login">Login</button>
+                      <button type="button" class="btn btn-default" v-on:click="data.state=data.CONTACTS">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+
+          </div>
+            
                 
         </div>
         
