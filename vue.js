@@ -86,7 +86,7 @@ function login() {
                 {
                     data.login.isAdmin = response.data.items[0].is_admin;
                 }
-                data.login.isAdmin = 1; //TESTING API's
+                //data.login.isAdmin = 1; //TESTING API's
                 data.msg = "";
                 data.state = data.CONTACTS;
                 data.persons = [];
