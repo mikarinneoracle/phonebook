@@ -97,6 +97,8 @@ BEGIN
    IF N > 0 THEN
       INSERT INTO PHONEBOOK (FIRSTNAME, LASTNAME, PHONENUMBER, COUNTRYCODE) values (firstname, lastname, phonenumber, countrycode)
       RETURN ID INTO id;
+   ELSE
+      id := -1;
    END IF;
   
 EXCEPTION
