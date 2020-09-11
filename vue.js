@@ -85,6 +85,8 @@ function login() {
                 if(response.data.count == 1)
                 {
                     data.login.isAdmin = response.data.items[0].is_admin;
+                } else {
+                    alert("Login failed.");
                 }
                 //data.login.isAdmin = 1; //TESTING API's
                 data.msg = "";
