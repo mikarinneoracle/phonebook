@@ -4,7 +4,20 @@
 
 ## Setup Guide
 
-### NEW! Oracle Digital Assistant Chatbot for Phonebook
+### NEW! Using the Deploy to Oracle Cloud Button
+
+<a href="https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Tasks/deploybutton.htm">Link to documentation</a>
+
+#### Try now!
+
+[
+![Deploy to Oracle Cloud]
+(https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)
+]
+(https://cloud.oracle.com/resourcemanager/stacks/create
+?zipUrl=https://github.com/mikarinneoracle/phonebook/blob/master/phonebook-stack.zip)
+
+
 
 Instructions how to set up a Chatbot for the Phonebook is now available at <a href="https://github.com/mikarinneoracle/Phonebookassistant/blob/master/README.md">Phonebookassistant</a>
 
@@ -31,7 +44,7 @@ Note: When creating the stack enter the following configuration options:
 
 ### Step 1: Login to SQL Developer Web under ADW/ATP <b>Development</b> tab with the admin user
 
-Then submit the following:
+Then submit the following - replace <i>&lt;your password&gt;</i> with a desired password complex enough:
 
 ```
 CREATE USER phonebook IDENTIFIED BY <your password>;
@@ -64,6 +77,14 @@ This refers to the `p_url_mapping_pattern   => 'api'` in the ords definition in 
 After logging in submit the following:
 
 ```
+CREATE TABLE users (
+     username  VARCHAR2 (255),
+     password   VARCHAR2 (255),
+     is_admin NUMBER(1,0)
+ );
+ 
+INSERT INTO users (username, password, is_admin) VALUES ('phonebook', '<your password>', 1);
+ 
 CREATE TABLE phonebook (
      id         NUMBER GENERATED ALWAYS AS IDENTITY,
      firstname  VARCHAR2 (255),
@@ -73,6 +94,8 @@ CREATE TABLE phonebook (
  );
 
 CREATE OR REPLACE PROCEDURE ADD_CONTACT (
+   uname     IN  VARCHAR2,
+   pwd       IN  VARCHAR2,
    firstname    IN  VARCHAR2,
    lastname     IN  VARCHAR2,
    phonenumber  IN  VARCHAR2,
@@ -80,11 +103,17 @@ CREATE OR REPLACE PROCEDURE ADD_CONTACT (
    id           OUT NUMBER
 )
 AS
+   N NUMBER;
+
 BEGIN
-   INSERT INTO PHONEBOOK (FIRSTNAME, LASTNAME, PHONENUMBER, COUNTRYCODE)
-   VALUES (firstname, lastname, phonenumber, countrycode)
-   RETURN ID INTO id;
- 
+   SELECT COUNT(*) INTO N FROM USERS WHERE USERNAME = uname and PASSWORD = pwd and IS_ADMIN = 1;
+   IF N > 0 THEN
+      INSERT INTO PHONEBOOK (FIRSTNAME, LASTNAME, PHONENUMBER, COUNTRYCODE) values (firstname, lastname, phonenumber, countrycode)
+      RETURN ID INTO id;
+   ELSE
+      id := -1;
+   END IF;
+  
 EXCEPTION
    WHEN OTHERS
    THEN HTP.print(SQLERRM);
@@ -105,6 +134,24 @@ ords.define_module (
         p_items_per_page         => 5,
         p_status                 => 'PUBLISHED',
         p_comments               => NULL 
+);
+ords.define_template ( 
+        p_module_name            => 'phonebook',
+        p_pattern                => 'listing/login/',
+        p_priority               => 0,
+        p_etag_type              => 'HASH',
+        p_etag_query             => NULL, 
+        p_comments               => NULL 
+);
+ords.define_handler (
+        p_module_name            => 'phonebook',
+        p_pattern                => 'listing/login/',
+        p_method                 => 'POST', 
+        p_source_type            => 'json/collection',
+        p_items_per_page         => 1,
+        p_mimes_allowed          => '',
+        p_comments               => 'admin login. returns is_admin if user is found with given username and password',
+        p_source                 => 'select is_admin from users where username = :username and password = :password'
 );
 ords.define_template ( 
         p_module_name            => 'phonebook',
@@ -142,9 +189,17 @@ ords.define_handler (
         p_comments               => 'searches for contacts in the phonebook by given name and lists found in sets of 5. Use recursively.',
         p_source                 => 'select id, firstname, lastname, firstname || '' '' || lastname as fullname, phonenumber, countrycode from phonebook where firstname || '' '' || lastname like :fullname order by fullname'
 );
+ords.define_template ( 
+        p_module_name            => 'phonebook',
+        p_pattern                => 'listing/:username/:password',
+        p_priority               => 0,
+        p_etag_type              => 'HASH',
+        p_etag_query             => NULL, 
+        p_comments               => NULL 
+);
 ords.define_handler (
         p_module_name           => 'phonebook',
-        p_pattern               => 'listing/',
+        p_pattern               => 'listing/:username/:password',
         p_method                => 'POST',
         p_source_type           => 'plsql/block',
         p_items_per_page        =>  0,
@@ -155,7 +210,10 @@ ords.define_handler (
     declare
         -- id NUMBER;
     BEGIN
-        ADD_CONTACT(firstname    => :firstname,
+        ADD_CONTACT(
+                uname    => :username,
+                pwd     => :password,
+                firstname    => :firstname,
                 lastname     => :lastname,
                 phonenumber  => :phonenumber,
                 countrycode  => :countrycode,
@@ -166,7 +224,7 @@ ords.define_handler (
 );
 ORDS.DEFINE_PARAMETER(
       p_module_name        => 'phonebook',
-      p_pattern            => 'listing/',
+      p_pattern            => 'listing/:username/:password',
       p_method             => 'POST',
       p_name               => 'id',
       p_bind_variable_name => 'id',
@@ -191,25 +249,47 @@ ords.define_handler (
         p_comments               => 'gets a contact from phonebook by id',
         p_source                 => 'select firstname, lastname, phonenumber, countrycode from phonebook where id = :id'   
 );
+ords.define_template ( 
+        p_module_name            => 'phonebook',
+        p_pattern                => 'listing/:id/:username/:password',
+        p_priority               => 0,
+        p_etag_type              => 'HASH',
+        p_etag_query             => NULL, 
+        p_comments               => NULL 
+);
 ords.define_handler (
         p_module_name            => 'phonebook',
-        p_pattern                => 'listing/:id',
+        p_pattern                => 'listing/:id/:username/:password',
         p_method                 => 'PUT', 
         p_source_type            => 'plsql/block',
         p_items_per_page         => 0,
         p_mimes_allowed          => '',
         p_comments               => 'updates a contact in the phonebook by id and post data',
-        p_source                 => 'update phonebook set firstname = :firstname, lastname = :lastname, phonenumber = :phonenumber, countrycode = :countrycode where id = :id' 
+        p_source                 => 'update phonebook set firstname = :firstname, lastname = :lastname, phonenumber = :phonenumber, countrycode = :countrycode
+        where id in (
+           with c as (select ''X'' as x from users where username = :username and password = :password and is_admin = 1),
+               q as (select id,''X'' as x from phonebook where id = :id)
+           select id
+             from c, q
+           where c.x = q.x and q.id = :id
+         )'
 );
 ords.define_handler (
         p_module_name            => 'phonebook',
-        p_pattern                => 'listing/:id',
+        p_pattern                => 'listing/:id/:username/:password',
         p_method                 => 'DELETE', 
         p_source_type            => 'plsql/block',
         p_items_per_page         => 0,
         p_mimes_allowed          => '',
         p_comments               => 'deletes a contact in the phonebook by id',
-        p_source                 => 'delete from phonebook where id = :id'
+        p_source                 => 'delete from phonebook
+        where id in (
+           with c as (select ''X'' as x from users where username = :username and password = :password and is_admin = 1),
+               q as (select id,''X'' as x from phonebook where id = :id)
+           select id
+             from c, q
+           where c.x = q.x and q.id = :id
+         )'
  );
  COMMIT;
  END;
@@ -232,3 +312,6 @@ Copy the files to object storage and make the container public.
 
 After uploading access the `index.html` with your browser and test.
 
+## There's more - Oracle Digital Assistant Chatbot for Phonebook
+
+Instructions how to set up a Chatbot for the Phonebook is now available at <a href="https://github.com/mikarinneoracle/Phonebookassistant/blob/master/README.md">Phonebookassistant</a>
