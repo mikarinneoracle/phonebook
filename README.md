@@ -10,16 +10,7 @@
 
 #### Try now!
 
-[
-![Deploy to Oracle Cloud]
-(https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)
-]
-(https://cloud.oracle.com/resourcemanager/stacks/create
-?zipUrl=https://github.com/mikarinneoracle/phonebook/blob/master/phonebook-stack.zip)
-
-
-
-Instructions how to set up a Chatbot for the Phonebook is now available at <a href="https://github.com/mikarinneoracle/Phonebookassistant/blob/master/README.md">Phonebookassistant</a>
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/mikarinneoracle/phonebook/blob/master/phonebook-stack.zip)
 
 ## Instructions for creating the Phonebook ORDS example using the OCI Resource Manager Stack
 
