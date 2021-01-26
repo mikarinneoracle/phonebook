@@ -1,7 +1,5 @@
 # Phonebook ATP ORDS demo
 
-<img src="https://github.com/mikarinneoracle/phonebook/blob/master/screenshot_phonebook.png" width=1200>
-
 ## Setup Guide
 
 ### NEW! Using the Deploy to Oracle Cloud Button
@@ -30,6 +28,8 @@ Note: When creating the stack enter the following configuration options:
 - ATP database name (defaults to "phonebook")
 - configuration VM ssh public key to access the VM for logs etc. (optional)
 - configuration VM shape, either Micro (always free) or standard (defaults to Micro)
+
+<img src="https://github.com/mikarinneoracle/phonebook/blob/master/screenshot_phonebook.png" width=1200>
 
 ## Instructions for creating the Phonebook ORDS example manually
 
