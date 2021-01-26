@@ -4,11 +4,11 @@
 
 ### NEW! Using the Deploy to Oracle Cloud Button
 
-<a href="https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Tasks/deploybutton.htm">Link to documentation</a>
-
 #### Try now!
 
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/mikarinneoracle/phonebook/blob/master/phonebook-stack.zip)
+
+<a href="https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Tasks/deploybutton.htm">Link to Oracle documentation</a>
 
 ## Instructions for creating the Phonebook ORDS example using the OCI Resource Manager Stack
 
