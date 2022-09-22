@@ -6,7 +6,12 @@
 
 #### Try now!
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/mikarinneoracle/phonebook/releases/download/latest/phonebook-stack.zip)
+[
+![Deploy to Oracle Cloud]
+(https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)
+]
+(https://cloud.oracle.com/resourcemanager/stacks/create
+?zipUrl=https://github.com/mikarinneoracle/phonebook/releases/download/latest/phonebook-stack.zip)
 
 <a href="https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Tasks/deploybutton.htm">Link to Oracle documentation</a>
 
